@@ -1,0 +1,32 @@
+1.初始化数据：npm init -y
+
+2.自动打包工具：npm i webpack-dev-server (依赖本地 webpack ：npm i webpack -D)
+
+	2.1配置 webpack.config.js（ //webpack 基于node进行构建的，node中任何合法的代码都是支持的）：
+		const path = require("path");
+		module.exports = {
+			entry: path.join(__dirname,"./src/main.js"),
+			output: {
+				path: path.join(__diename,"./dist"),
+				filename: "bundle.js"
+			}
+		}
+
+	2.2在 package.json 中添加脚本：
+		"dev": "webpack-dev-server --open --port 3000 --contentBase src --hot"
+
+	2.3安装 npm i webpack-cli -D
+
+
+3.在内存中生成同样内存首页-自动注入bundle.js：npm i html-webpack-plugin -D:
+	3.1配置 webpack.config.js 文件：
+
+		const htmlWebpackPlugin= require("html-webpack-plugin");
+
+		//在到处对象中挂载 plugins 节点（数组类型）：
+		plugins:[ //所有插件的配置节点
+			new htmlWebpackPlugin({
+				template: path.join(__dirname,"./src/index.html"),//指定模板文件路径
+				filename: "index.html" //设置生成内存页面的名称
+			})
+		]
